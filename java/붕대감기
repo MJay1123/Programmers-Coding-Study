@@ -4,25 +4,25 @@ class Solution {
         int time = 0;
         int hp = health;
         int t = 0; // attack 이벤트 index
-        while(time < attacks[attacks.length-1][0]){
-            
-            for(int i=0; i<bandage[0]; i++){
+        
+        while(time < attacks[attacks.length-1][0]){    
+            for(int i=0; i<bandage[0]; i++){ // 붕대감기 시작
                 time++; // 시간 경과
-                if(time == attacks[t][0]){
+                if(time == attacks[t][0]){ // 공격받으면
                     hp -= attacks[t][1]; // 공격받음
                     t++; // 다음 공격이벤트로 이동
-                    answer = hp;
-                    if(hp<=0){
+                    answer = hp; // 정답에 체력 반영
+                    if(hp<=0){ // 죽으면
                         answer = -1;
-                        time = attacks[attacks.length-1][0];
+                        time = attacks[attacks.length-1][0]; // 시간을 끝으로 보내서 while문 없애기
                     }
                     break; // 붕대감기 시간 초기화
-                } else {
+                } else { // 공격 안받으면
                     hp += bandage[1]; // 회복
                     if(i==bandage[0]-1){
                         hp += bandage[2]; // 연속 회복 성공
                     }
-                    if(hp > health){
+                    if(hp > health){ // 최대체력은 못 넘음
                         hp = health;
                     }    
                 }
