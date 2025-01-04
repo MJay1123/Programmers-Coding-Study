@@ -20,3 +20,31 @@ class Solution {
         return answer;
     }
 }
+--------------------------------------------------
+class Solution {
+    public int solution(int[] wallet, int[] bill) {
+        int answer = 0;
+        while (compare(wallet, bill)){ // 지폐가 더 크니까 접자
+            jubda(bill);
+            answer++;
+        }
+        return answer;
+    }
+    private static void jubda(int[] bill){ // 더 긴 부분을 접기
+        if(bill[0] >= bill[1]){
+            bill[0] /= 2;
+        } else {
+            bill[1] /= 2;
+        }
+    }
+    private static boolean compare(int[] wallet, int[] bill){ // 지갑과 지폐 비교
+        if(Math.max(wallet[0], wallet[1]) < Math.max(bill[0], bill[1])){
+            return true;
+        }
+           if(Math.min(wallet[0], wallet[1]) < Math.min(bill[0], bill[1])){
+               return true;
+           }
+           return false;
+    }
+}
+           
