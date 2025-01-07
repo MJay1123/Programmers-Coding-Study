@@ -51,3 +51,57 @@ class Solution {
     }
 }
 ------------------------------------------------------------------------------
+import java.util.*;
+class Solution {
+    public String solution(String video_len, String pos, String op_start, String op_end, String[] commands) {
+        String answer = "";
+        
+        int videoTime = getTime(video_len);
+        int posTime = getTime(pos);
+        int startTime = getTime(op_start);
+        int endTime = getTime(op_end);
+        
+        for(int i=0; i<commands.length; i++){
+            posTime = setTime(videoTime, posTime, startTime, endTime);
+            posTime = moveTime(posTime, commands[i]);
+            posTime = setTime(videoTime, posTime, startTime, endTime);
+        }
+        int min = posTime / 60;
+        int sec = posTime % 60;
+        answer = String.format("%02d:%02d", min, sec);
+        return answer;
+    }
+    
+    private static int getTime(String str){
+        String[] a = str.split(":");
+        int min = Integer.parseInt(a[0]);
+        int sec = Integer.parseInt(a[1]);
+        int time = min*60 + sec;
+        return time;
+    }
+        
+    private static int moveTime(int time, String str){
+        switch(str){
+            case "prev" :
+                time -= 10;
+                break;
+            case "next" :
+                time += 10;
+                break;
+        }
+        return time;
+    }
+        
+    private static int setTime(int videoTime, int posTime, int startTime, int endTime){
+        if(posTime < 0){
+            posTime = 0;
+        }
+        if(posTime > videoTime){
+            posTime = videoTime;
+        }
+        if(posTime >= startTime & posTime <= endTime){
+            posTime = endTime;
+        }
+        return posTime;
+    }
+}
