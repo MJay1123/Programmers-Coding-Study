@@ -22,3 +22,51 @@ class Solution {
         return answer;
     }
 }
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+import java.util.*;
+
+class Solution {
+    
+    static boolean[] sosu = new boolean[3001]; // 0~3000의 소수 여부용 boolean 배열
+    
+    public int solution(int[] nums) {
+        
+        checkNumber(sosu);
+        
+        Arrays.sort(nums);
+        
+        List<Integer> numberList = sumNumber(nums);
+        
+        int answer = 0;
+        for(int i=0; i<numberList.size(); i++){
+            if(sosu[numberList.get(i)] == false){
+                answer++;
+            }
+        }
+        
+        return answer;
+    }
+    
+    public static void checkNumber(boolean[] array){
+        for(int i=2; i<=array.length-1; i++){
+            if(array[i] == false){
+                for(int j=2; i*j<array.length; j++){
+                    array[i*j] = true;
+                }
+            }
+        }    
+    }
+    
+    public static List<Integer> sumNumber(int[] numbers){
+        List<Integer> list = new ArrayList<>();
+        for(int x=0; x<=numbers.length-3; x++){
+            for(int y=x+1; y<=numbers.length-2; y++){
+                for(int z=y+1; z<=numbers.length-1; z++){
+                    int k = numbers[x] + numbers[y] + numbers[z];
+                    list.add(k);
+                }
+            }
+        }
+        return list;
+    }
+}
