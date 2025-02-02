@@ -51,19 +51,11 @@ class Solution {
         int i = 0;
         for(String carNumber : carNumberList){
             List<String> list = getList(carNumber, records);
-            System.out.println(list);
             int time = getTime(list);
-            System.out.println(time);
             int charge = feeCalculate(time, fees);
-            System.out.println(charge);
             answer[i] = charge;
             i++;
         }
-        
-        // List<String> testList = getList("0000", records);
-        // System.out.println("getList test : " + testList);
-        // System.out.println("getTime test : " + getTime(testList));
-        // System.out.println("feeCalculate test : " + feeCalculate(getTime(testList), fees));
         
         return answer;
     }
