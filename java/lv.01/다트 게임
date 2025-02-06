@@ -103,3 +103,101 @@ class Solution {
         }
     }
 }
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+import java.util.*;
+
+class Solution {
+    public int solution(String dartResult) {
+        int answer = 0;
+        
+        int[] scoreArray = getScoreArray(dartResult);
+        List<String> temp = getOthers(dartResult);
+        String[] SDTArray = getSDTArray(temp);
+        String[] specialArray = getSpecialArray(temp);
+
+        scoreArray = calculate(scoreArray, SDTArray, specialArray);
+
+        for(int i=0; i<scoreArray.length; i++){
+            answer += scoreArray[i];
+        }
+        return answer;
+    }
+    
+    public int[] calculate(int[] score, String[] SDT, String[] special){
+        for(int i=0; i<SDT.length; i++){
+            switch(SDT[i]){
+                case "S" : score[i] = (int)Math.pow(score[i], 1);
+                    break;
+                case "D" : score[i] = (int)Math.pow(score[i], 2);
+                    break;
+                case "T" : score[i] = (int)Math.pow(score[i], 3);
+                    break;
+            }
+        }
+        if(special[0].equals("*")){
+            score[0] *= 2;
+        } else if(special[0].equals("#")){
+            score[0] *= -1;
+        }
+        for(int i=1; i<special.length; i++){
+            if(special[i].equals("*")){
+                score[i-1] *= 2;
+                score[i] *= 2;
+            } else if(special[i].equals("#")){
+                score[i] *= -1;
+            }
+        }
+        return score;
+    }
+    
+    public String[] getSpecialArray(List<String> list){
+        String[] array = new String[list.size()];
+        for(int i=0; i<list.size(); i++){
+            if(list.get(i).length() == 2){
+                array[i] = list.get(i).charAt(1) + "";
+            } else {
+                array[i] = "";
+            }
+        }
+        return array;
+    }
+    
+    public String[] getSDTArray(List<String> list){
+        String[] array = new String[list.size()];
+        for(int i=0; i<list.size(); i++){
+            array[i] = list.get(i).charAt(0) + "";
+        }
+        return array;
+    }
+    
+    public List<String> getOthers(String dartResult){
+        List<String> list = new ArrayList<>();
+        for(int i=0; i<dartResult.length(); i++){
+            if(dartResult.charAt(i) == 'S' | dartResult.charAt(i) == 'D' | dartResult.charAt(i) == 'T'){
+                if(i+1 < dartResult.length()){
+                    if(dartResult.charAt(i+1) == '*'){
+                        list.add(dartResult.charAt(i) + "*");
+                    } else if(dartResult.charAt(i+1) == '#'){
+                        list.add(dartResult.charAt(i) + "#");
+                    } else {
+                        list.add(Character.toString(dartResult.charAt(i)));
+                    }
+                } else {
+                    list.add(Character.toString(dartResult.charAt(i)));
+                }
+            }
+        }
+        return list;
+    }
+    
+    public int[] getScoreArray(String dartResult){
+        String temp = dartResult.replace("*", "");
+        temp = temp.replace("#", "");
+        String[] tempArray = temp.split("[S,D,T]");
+        int[] array = new int[tempArray.length];
+        for(int i=0; i<array.length; i++){
+            array[i] = Integer.parseInt(tempArray[i]);
+        }
+        return array;
+    }
+}
