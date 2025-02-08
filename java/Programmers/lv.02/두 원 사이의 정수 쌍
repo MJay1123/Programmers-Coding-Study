@@ -10,9 +10,6 @@ import java.util.*;
 class Solution {
     public long solution(int r1, int r2) {
         long answer = 0;
-        // System.out.println("count test : " + count(3));
-        // System.out.println("count test : " + count(2));
-        // System.out.println("getBoundary test : " + getBoundary(5));
         answer = (count(r2) - count(r1))*4;
         answer += getBoundary(r1)*4;
         
