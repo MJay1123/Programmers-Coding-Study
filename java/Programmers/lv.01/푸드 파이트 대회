@@ -10,7 +10,7 @@
 두 선수는 1번 음식 1개, 2번 음식 2개, 3번 음식 3개씩을 먹게 되므로 음식의 배치는 "1223330333221"이 됩니다. 따라서 1번 음식 1개는 대회에 사용하지 못합니다.
 
 수웅이가 준비한 음식의 양을 칼로리가 적은 순서대로 나타내는 정수 배열 food가 주어졌을 때, 대회를 위한 음식의 배치를 나타내는 문자열을 return 하는 solution 함수를 완성해주세요.
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 class Solution {
     public String solution(int[] food) {
         String answer = "";
@@ -31,4 +31,31 @@ class Solution {
         sequence += Integer.toString(number).repeat(num);
         return sequence;
     }
+}
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+import java.util.*;
+class Solution {
+    public String solution(int[] food) {
+        String answer = "";
+        StringBuilder sb = new StringBuilder();
+        List<Integer> list = new ArrayList<>();
+        
+        for(int i=1; i<food.length; i++){
+            int useCount = food[i] / 2;
+            for(int j=1; j<=useCount; j++){
+                list.add(i);
+            }
+        }
+        
+        for(int i=0; i<list.size(); i++){
+            sb.append(list.get(i));
+        }
+        sb.append("0");
+        for(int i=list.size()-1; i>=0; i--){
+            sb.append(list.get(i));
+        }
+        answer = sb.toString();
+        return answer;
+    }
+    
 }
