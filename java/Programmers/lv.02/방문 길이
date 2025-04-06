@@ -109,7 +109,7 @@ class Solution {
         
         @Override
         public int hashCode() {
-            return 0; // name 필드의 해시코드를 반환한다.
+            return 0;
         }
     }
     
@@ -135,7 +135,7 @@ class Solution {
         
         @Override
         public int hashCode() {
-            return 0; // name 필드의 해시코드를 반환한다.
+            return 0;
         }
     }
 }
