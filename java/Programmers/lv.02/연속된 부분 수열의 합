@@ -4,44 +4,62 @@
 부분 수열의 합은 k입니다.
 합이 k인 부분 수열이 여러 개인 경우 길이가 짧은 수열을 찾습니다.
 길이가 짧은 수열이 여러 개인 경우 앞쪽(시작 인덱스가 작은)에 나오는 수열을 찾습니다.
-수열을 나타내는 정수 배열 sequence와 부분 수열의 합을 나타내는 정수 k가 매개변수로 주어질 때, 위 조건을 만족하는 부분 수열의 시작 인덱스와 마지막 인덱스를 배열에 담아 return 하는 solution 함수를 완성해주세요. 이때 수열의 인덱스는 0부터 시작합니다.
-  ----------------------------------------------------------------------
-  // 시간 초과가 왜 많은지 모르겠음;;ㅠㅠ
-  class Solution {
+수열을 나타내는 정수 배열 sequence와 부분 수열의 합을 나타내는 정수 k가 매개변수로 주어질 때, 위 조건을 만족하는 부분 수열의 시작 인덱스와 마지막 인덱스를 배열에 담아 return 하는 solution 함수를 완성해주세요.
+이때 수열의 인덱스는 0부터 시작합니다.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+import java.util.*;
+class Solution {
     public int[] solution(int[] sequence, int k) {
-       int length = getLength(sequence, k);
-        int index = getIndex(sequence, k, length);
+        List<Range> rangeList = new ArrayList<>();
+        int sum = 0;
+        int start = 0;
+        int end = 0;
+        Queue<Integer> queue = new LinkedList<>();
+        while(true){
+            if(end == sequence.length){
+                break;
+            }
+            queue.offer(sequence[end]);
+            sum += sequence[end];
+            while(sum > k){
+                start++;
+                sum -= queue.poll();
+            }
+            if(sum == k){
+                rangeList.add(new Range(start, end));
+            }
+            end++;
+        }
+        Collections.sort(rangeList);
+        // System.out.println("rangeList : " + rangeList);
         int[] answer = new int[2];
-        answer[0] = index;
-        answer[1] = index + length - 1;
+        answer[0] = rangeList.get(0).start;
+        answer[1] = rangeList.get(0).end;
         return answer;
     }
     
-    private static int getLength(int[] sequence, int k){
-        int I = sequence.length;
-        int J = sequence.length;
-        for(int i=0; i<sequence.length; i++){
-            int sum = 0;
-            for(int j=0; i+j<sequence.length; j++){
-                sum += sequence[i+j];
-                if(sum == k){
-                    J = Math.min(J, j+1);
-                }   
+    static class Range implements Comparable<Range>{
+        int start;
+        int end;
+        public Range(int start, int end){
+            this.start = start;
+            this.end = end;
+        }
+        
+        @Override
+        public String toString(){
+            return "[" + this.start + ", " + this.end + "]";
+        }
+        
+        @Override
+        public int compareTo(Range r){
+            int length1 = this.end - this.start;
+            int length2 = r.end - r.start;
+            if(length1 == length2){
+                return this.start - r.start;
+            } else {
+                return length1 - length2;
             }
         }
-        return J;
-    }
-    
-    private static int getIndex(int[] sequence, int k, int length){
-        for(int i=0; i<=sequence.length-length; i++){
-            int sum = 0;
-            for(int j=0; j<length; j++){
-                sum += sequence[i+j];
-            }
-            if(sum == k){
-                return i;
-            }
-        }
-        return 0;
     }
 }
