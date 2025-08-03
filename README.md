@@ -2,21 +2,4 @@
 
 import.java.util.*;
 
-int의 범위는 -2147483648 ~ 2147483647
-
-2147483647에 1을 더하면 -2147483648
-
-long타입으로 선언해야 더 큰 수를 사용 가능
-
-
-Math.max
-Math.min
-
-
-Character.toString();
-Integer.parseInt();
-
-
-split()
-charAt()
-indexOf()
+<img width="681" height="742" alt="image" src="https://github.com/user-attachments/assets/ffcd9ac1-d4e9-43c9-b467-29e7cffe6342" />
